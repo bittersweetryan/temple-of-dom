@@ -1,0 +1,7 @@
+{
+  "name": "Temple of DOM",
+  "version": "0.1.0",
+  "devDependencies": {
+    "express": "~3.3.1"
+  }
+}
