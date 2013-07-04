@@ -1,22 +1,30 @@
 var express = require( 'express' ),
-    app = express();
-    
-app.get( '/hello', function( req, res){
-    var ret = {
-        count: 100,
-        tweets : [
-            {
-                username : 'bittersweetryan',
-                tweet : 'hello, twitter'
-            }
-        ]
-    };
-    
-    res.json( JSON.stringify( ret ) );
+	fs = require( 'fs' ),
+	app = express();
+
+app.use( express.logger() );
+
+app.get( '/search/:term', function( req, res){
+	
+	fs.readFile( 'tweets.json', 'utf-8', function( err, content ){
+
+		var tweetData = JSON.parse( content ),
+			tweets = tweetData.tweets;
+
+		tweets = tweets.filter( findTweets );
+
+		res.json( tweets );
+
+	} );
+
+	function findTweets( ele ){	
+
+		return new RegExp( req.params.term, 'gi' ).test( ele.tweet + ' ' + ele.username );
+	}
+	
 });
 
-app.listen( process.env.PORT );
 
-    
-    
-    
+
+//app.listen( process.env.PORT );
+app.listen( 3000 );
