@@ -3,6 +3,7 @@ var express = require( 'express' ),
 	app = express();
 
 app.use( express.logger() );
+app.use( express.static( 'public' ) );
 
 app.get( '/search/:term', function( req, res){
 	
@@ -21,10 +22,7 @@ app.get( '/search/:term', function( req, res){
 
 		return new RegExp( req.params.term, 'gi' ).test( ele.tweet + ' ' + ele.username );
 	}
-	
 });
-
-
 
 //app.listen( process.env.PORT );
 app.listen( 3000 );
