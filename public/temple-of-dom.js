@@ -38,6 +38,9 @@
 
     function addTweet( tweet ){
         
+        var tweets = document.querySelector( '.tweets' );
+
+        tweets.insertBefore( createTweet( tweet ), tweets.firstChild );
     }
 
     function clearTweets(){
@@ -48,22 +51,48 @@
         }
     }
 
-    function createTweet( ){
+    function createTweet( tweet ){
         var frag = document.createDocumentFragment(),
             li = document.createElement( 'li' ),
             avatar = document.createElement( 'div' ),
             avatarImg = document.createElement( 'img' ),
             tweetUser = document.createElement( 'div' ),
+            userText = document.createTextNode( tweet.username ),
             tweetContent = document.createElement( 'div'),
-            tweetInfo = document.createElement( 'div'  );
+            tweetText = document.createTextNode( tweet.tweet ),
+            tweetInfo = document.createElement( 'div'  ),
+            tweetInfoText = document.createTextNode( tweet.date );
 
-            li.className( 'tweet' );
-            avatar.className( 'avatar' );
-            avatarImg.setAttribute( 'src', '' );
-            avatarImg.setAttribute( 'alt', '' );
-            tweetUser.className( 'tweet-user' );
-            tweetContent.className( 'tweet-content' );
-            tweetInfo.className( 'tweet-info' ); 
+            li.className = 'tweet';
+            avatar.className =  'avatar';
+            avatarImg.setAttribute( 'src', 'images/' + tweet.avatar );
+            avatarImg.setAttribute( 'alt', tweet.avatar );
+            tweetUser.className =  'tweet-user';
+            tweetContent.className =  'tweet-content';
+            tweetInfo.className = 'tweet-info'; 
+
+            frag.appendChild( li );
+
+            li.appendChild( avatar );
+
+            avatar.appendChild( avatarImg );
+
+            li.appendChild( tweetUser );
+
+            tweetUser.appendChild( userText );
+
+            li.appendChild( tweetContent );
+
+            tweetContent.appendChild( tweetText );
+
+            tweetContent.appendChild( tweetInfo );
+
+            tweetInfo.appendChild( tweetInfoText );
+
+            return frag;
+                
+            //append child
+            //insertbefore
     }
 
-}( ) );
+} ( ) );
