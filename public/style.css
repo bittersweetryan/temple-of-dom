@@ -53,10 +53,17 @@ li.tweet{
     border-radius: 4px;
 }
 
-.avatar{
-    width: 100px;
-    height: 1tw00px;
+div.avatar{
+    width: 90px;
+    height: 90px;
     float: left;
+    margin: 0 10px 10px 10px;
+    border: 2px soild rgb(150, 150, 150);
+}
+
+img.avatar{
+    width: 86px;
+    height: 86px;
 }
 
 .tweet{
