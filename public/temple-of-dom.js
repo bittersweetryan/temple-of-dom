@@ -55,7 +55,7 @@
         var frag = document.createDocumentFragment(),
             li = document.createElement( 'li' ),
             avatar = document.createElement( 'div' ),
-            avatarImg = document.createElement( 'img' ),
+            avatarImage = document.createElement( 'img' ),
             tweetUser = document.createElement( 'div' ),
             userText = document.createTextNode( tweet.username ),
             tweetContent = document.createElement( 'div'),
@@ -65,8 +65,11 @@
 
             li.className = 'tweet';
             avatar.className =  'avatar';
-            avatarImg.setAttribute( 'src', 'images/' + tweet.avatar );
-            avatarImg.setAttribute( 'alt', tweet.avatar );
+            avatarImage.setAttribute( 'src', 'images/' + tweet.avatar );
+            avatarImage.setAttribute( 'alt', tweet.avatar );
+
+            avatarImage.classList.add( 'avatar' );
+
             tweetUser.className =  'tweet-user';
             tweetContent.className =  'tweet-content';
             tweetInfo.className = 'tweet-info'; 
@@ -75,7 +78,7 @@
 
             li.appendChild( avatar );
 
-            avatar.appendChild( avatarImg );
+            avatar.appendChild( avatarImage );
 
             li.appendChild( tweetUser );
 
