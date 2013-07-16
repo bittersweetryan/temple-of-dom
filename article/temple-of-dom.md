@@ -35,7 +35,22 @@ Getting a nodes parent node is as simple as refering to its parentNode property.
 Using only the native JavaScript objects that are in the DOM (and a little bit of household cleaner known as AJAX)we'll dive into the depths of twitter to search for hidden treasure. Using a basic HTML document as our map we'll use  traverse the DOM tree, add/edit/remove elements on the page, listen for events, and even get some data using the browser's XMLHttpRequest object. 
 
 ###First Challenge
-The first challenge we'll face on our journey is selecting our text input and listening for events on it. In our DOM toolbelt we have a few different options on how to do this: `getElementByID`, `getElementsByClassName`, `getElementsbyTagName`, `querySelector`, and `querySelectorAll`.  For the purposes of our journey, the querySelctor methods will be just the Swiss Army Knife kind of tool we need.  `document.querySelector` and `document.querySelectorAll` allows us to pass in a CSS selector and get back a the first matching DOM element in the case of `querySelector` or a populated NodeList object in the case of 'querySelectorAll`.
+
+The first challenge we'll face on our journey is selecting our text input and listening for a 'keyup' event on the input to trigger an AJAX call. 
+
+> `keydown` and `keypress` events may fire continually while the user has a key pressed, however, the keyup event will only fire once key press.
+
+The browser's native DOM provides us with a few different options on how to do select elements: `getElementById`, `getElementsByClassName`, `getElementsbyTagName`, `querySelector`, and `querySelectorAll`.  `getElementById` has been around since the DOM level 1 spec.  It will return a reference to the first item that is found with a matching ID attribute, 'getElementsByTagName' will return a list of nodes matching a specific HTML tag.  The `getElementsByClassName` will return a NodeList with elements matching a specific class, however, Internet Explorer is limited to versions 9 and newer. 
+
+For the purposes of our journey, the querySelctor methods will be the Swiss Army Knife kind of tool we need as it does everything the above methods and will work in versions of Internet Explorer 8 and up.  Both `document.querySelector` and `document.querySelectorAll` accept CSS selector list as its only argument and returns the first matching DOM element in the case of `querySelector` or a populated NodeList object in the case of 'querySelectorAll`.
+
+> Note: `getElementsByClassName`, `getElementsByTagName`, `querySelector`, and `querySelectorAll` are also methods that are available on HTMLElement nodes.  This means that they will search the children of a node and return matching results. 
+
+Since our HTML map has only a single input the `document.querySelector` method is the correct one to use.  In the following code we are saving a reference to the search input by passing the `document.querySelector` method the ID of our search input and saving the result to a variable named `input`.  
+
+	var input = document.querySelector( '#search-input' );
+
+Now that we have our element we need to be able to listen to keyup events on it.  
 
 ###Second Challenge
 getting tweets and adding them to the dom
