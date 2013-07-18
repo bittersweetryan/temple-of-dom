@@ -1,26 +1,26 @@
 ;( function( ){
     'use strict';
     
-    var input = document.querySelector( '#search-input' );
+    var searchInput = document.querySelector( '#search-input' );
+    var eventListener;
 
-    input.addEventListener( 'keyup',  getTweets );
+	searchInput.addEventListener( 'keyup',  getTweets );	 
 
     function getTweets( e ){
-        var ret = {},
-            request,
+        var request,
             term;
 
-        term = e.currentTarget.value;
+        term = e.target.value;
 
         if( term.length > 1 ){
             
             request = new XMLHttpRequest();
 
-            request.addEventListener( 'load', function( e ){
-                addTweets( JSON.parse( this.response ) );
-            });
+        	request.addEventListener( 'load', function( e ){
+        	    addTweets( JSON.parse( this.response ) );
+        	});
 
-            request.open( 'GET', 'http://localhost:3000/search/' + term, true );
+            request.open( 'GET', 'http://' + window.location.host + '/search/' + term, true );
             request.send();
         }
     }
@@ -28,7 +28,7 @@
     function addTweets( data ){
         clearTweets();
 
-        if( data.length ){
+        if( typeof data === 'function' && data.length ){
 
             data.forEach(
                 addTweet
@@ -44,7 +44,7 @@
     }
 
     function clearTweets(){
-        var ele = document.querySelector( '.tweets' );
+        var ele = document.querySelectorAll( '.tweet' );
 
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
