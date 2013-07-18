@@ -2,9 +2,10 @@
     'use strict';
     
     var searchInput = document.querySelector( '#search-input' );
-    var eventListener;
 
 	searchInput.addEventListener( 'keyup',  getTweets );	 
+
+	searchInput = null;
 
     function getTweets( e ){
         var request,
@@ -28,11 +29,19 @@
     function addTweets( data ){
         clearTweets();
 
-        if( typeof data === 'function' && data.length ){
+        if( typeof data === 'object' && data.length ){
 
             data.forEach(
                 addTweet
             );
+        }
+    }
+
+    function clearTweets(){
+        var ele = document.querySelectorAll( '.tweet' );
+
+        while( ele.firstChild ){
+            ele.removeChild( ele.firstChild );
         }
     }
 
@@ -43,13 +52,6 @@
         tweets.insertBefore( createTweet( tweet ), tweets.firstChild );
     }
 
-    function clearTweets(){
-        var ele = document.querySelectorAll( '.tweet' );
-
-        while( ele.firstChild ){
-            ele.removeChild( ele.firstChild );
-        }
-    }
 
     function createTweet( tweet ){
         var frag = document.createDocumentFragment(),
@@ -93,9 +95,6 @@
             tweetInfo.appendChild( tweetInfoText );
 
             return frag;
-                
-            //append child
-            //insertbefore
     }
 
 } ( ) );

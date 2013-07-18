@@ -88,18 +88,18 @@ In order to get our tweet data we'll need to implement the `getTweets` function 
     
 *XMLHttpRequest is not part of the Document Object Model, it is however it is part of the W3C spec. 
 
-The `addTweets` callback function will accept a JSON object as a parameter and clear all the current tweets from the page before adding new ones (which we'll cover in our third challenge).  The completed addTweets function will look like this:
+The `addTweets( data )` callback function will accept a JSON object as a parameter and clear all the current tweets from the page before adding new ones (which we'll cover in our third challenge).  The completed addTweets function will look like this:
 
     function addTweets( data ){
         clearTweets();
 
-        if( data.length ){
+        if( typeof data === 'object' && data.length ){
 
             data.forEach(
                 addTweet
             );
         }
-    }  
+    } 
 
 In order to remove all of the tweets from the page we'll get a reference to the ordered list that contains the tweets and use some of the navigation properties we learned earlier in the article.  Using a `while` loop we'll loop through all of the ordered lists' children until it has no more, removing each child along the way using the `removeChild` method as shown below:
 
