@@ -1,27 +1,14 @@
 
 #Indiana Jones and the Temple of DOM
 
-Much like Indiana Jones doesn't rely on heavy artiliry every web project doesn't need to rely on heavy libraries like jQuery.  Many times developers can tap into the power of the browsers native API for working with HTML documents, the Document Object Model.  The DOM is a powerful API for manipulating XML and HTML documents, listening for and responding to events, and handling AJAX requests. Much like Indiana Jones had to deal with Mola Ram in the Temple of DOOM we'll have to deal with some Internet Explorere quirks in our Temple of DOM.
+For some developers ditching the dollar sign can be as scary as entering the Temple of DOOM.  Much like Indiana Jones doesn't rely on heavy artiliry every web project doesn't need to rely on heavy libraries like jQuery.  Many times developers can tap into the power of the browsers native API for working with HTML documents, the Document Object Model.  The DOM is a powerful API for manipulating XML and HTML documents, listening for and responding to events, and handling AJAX requests. Much like Indiana Jones had to deal with Mola Ram in the Temple of DOOM we'll have to deal with some Internet Explorere quirks in our Temple of DOM.
 
-swapping whips and knives for methods and properties
+In this article we'll build an application to search for tweets by Dr. Jones and his crew on their epic 1984 journey into the Temple of Doom.  However we'll be swapping whips and knives for methods and properties as our weapons of choice as we build our application.  In our journey we'll face four distinct challanges: selecting elements and listening for events, getting data from the server and removing elements from the page, lastly we'll tackle event delgation and modifying an element's existing class information. 
 
-In this article we'll build an application to search for tweets by Dr. Jones and his crew on their epic 1984 journey into the Temple of Doom.  
+Before we get started on this journey we'll need to understand how to navigate our terrain so we'll start with a quick brief on traversing HTML landscapes. After we know now to navigate our HTML structure our journey will take us through building an application that will let us dynamically search for tweets from the gang and favorite the ones we like.
 
-Before we get started we'll need to understand how to navigate our terrain so we'll start with a quick brief on traversing HTML landscapes. From there well build an application that will let us search tweets from the gang, favorite tweets, and even something else.
-
-###The Map
-The terrain on our journey isn't made up of mountains, rivers, and valleys, however it does involve a tree.  It's a digital tree that consists of nodes.  Each HTML page is comprised of a tree of nodes.  The map for our journey looks like this:
-
-Just like a map has different types of terrain our DOM tree has different kinds of elements.  Table 1 has a list of these elements and their associated type id's
-
-	<table>
-		<tr>
-			<td>Type</td>
-			<td>id</td>
-		</tr>
-	</table>
-
-One important distinction to note is that DocumentElement nodes that contain text also have at least one TextNode child that contains the textural data.  
+###Reading The Map
+The terrain in the Temple oF DOM isn't made up of mountains, rivers, and valleys, however it does involve a tree.  It's a digital tree that consists of nodes that relate to each other through parent and child relationships.  Each HTML page is comprised of a tree of nodes, starting with the `html` tag at it's root.  Each type of node on our map has a specific type, however for this journey we'll mainly be dealing with Element nodes and Text nodes. ElementNodes represent HTML elements and Text nodes contain the text that is displayed on the users screen.  
 
 Instead of directions like "left" and "right" we traverse our map using directions like "parent" and "child".  A parent node is the node directly above and to the left of a node in the node tree.  The first parent of a document (the element that has no parents) is called the "root" node, in a HTML document the <html> tag is always the root node.  Each parent node can have one or many children.  The <html> tag typically has children of <head> and <body>.  
 
@@ -34,7 +21,45 @@ Getting a nodes parent node is as simple as refering to its parentNode property.
 
 ###The Treasure Hunt
 
-Using only the native JavaScript objects that are in the DOM (and a little bit of household cleaner known as AJAX)we'll dive into the depths of twitter to search for hidden treasure. Using a basic HTML document as our map we'll use  traverse the DOM tree, add/edit/remove elements on the page, listen for events, and even get some data using the browser's XMLHttpRequest object. 
+Now that we're prepared to navigate our landscape let's take a look at where the Temple of DOM will take us.  Our goal will be to search a fake twitter stream for artifacts (tweets) that match a search string and display only the matching tweets on the screen.  We will also have the ability to favorite artifacts we find in the Temple so we can look at them later. Our HTML document map will be quite simple, yet will provide us with the opportunity to use many of the DOM's tools to accomplish our goal. 
+
+	<!doctype html>
+	<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Twitter Client</title>
+	    <link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+	    <header>
+	        <h1 class="header-text">Twitter Treasure Hunt</h1>
+	    </header>
+	    <div class="content">
+	        <section class="search">
+	            <input type="text" class="search-text" id="search-input">
+	        </section>
+	        <section class="tweet-container">
+	            <ul class="tweets">
+	                <li class="tweet">
+	                    <div class="avatar">
+	                        <img src="images/Indiana_Jones.jpg" alt="" class="avatar">
+	                    </div>
+	                    
+	                    <div class="tweet-user">
+	                        Ryan Anklam @bittersweetryan
+	                    </div>
+	                    <div class="tweet-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore aliquam ex.
+	                        <div class="tweet-info">
+	                            1/1/2030 12:00 am
+	                        </div>
+	                    </div>
+	                </li>
+	            </ul>
+	        </section>
+	    </div>
+	    <script src="temple-of-dom.js"></script>
+	</body>
+	</html>
 
 ###First Challenge
 
@@ -174,6 +199,10 @@ Using these tools we can create the `addTweet` and `createTweet` methods:
     }
 
 ###Fourth Challenge
-event delegation, classList
+
+We're almose out of the Temple safely, however, we'd like to come back and remember the things that we really liked along the way.  To do this we'll "favorite" the artifacts we really liked.  In order to do this we'll use a technique called "event delegation".  Since we are adding and removing artifacts dynamically we'd have to add event listeners on each item we add to the page, we'd also have to remember to clean up after ourselves when items are removed to the page. Additionally if we had a large list of items to listen to we'd end up creating a lot of event listeners which could slow our page down.  The solution to this problem is to use event delegation. Event delegation is where the event handler for an item is added to one of the element's parents and use event bubbling to respond to the event.
+
+>Event bubbling is where events trigered on children get triggered on parent elements all the way up the dom tree until the event is finally triggered on the global object.  For example if we have a DOM tree that looks like this `html > body > div > ul > li` and a user clicks on the li the click will fire on the li, ul, div, body, and html elements and each one of these elements can handle the event. < < bubbling pic > > 
+ 
 The DOMTokenList can be iterated like an array, but it also has some useful utility methods.  The `add` method can be used to add a class to an element, avoiding the need to manually to mainpulate the className's string.  The `remove`
 
