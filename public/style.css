@@ -101,3 +101,21 @@ img.avatar{
     margin-top: 5px;
     font-style:italic;
 }
+
+.favorite{
+    float: right;
+    height: 32px;
+    width: 32px;
+    background : url(images/star32.png) center no-repeat;
+    cursor: pointer;
+}
+
+.favorite-selected{
+    background : url(images/star32_selected.png) center no-repeat;
+}
+
+/* preload images */
+body:after{
+    display:none;
+    content: url(images/star32.png) url(images/star32_selected.png);
+}

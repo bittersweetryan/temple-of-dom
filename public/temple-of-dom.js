@@ -1,17 +1,34 @@
 ;( function( ){
     'use strict';
     
-    var searchInput = document.querySelector( '#search-input' );
+    var searchInput = document.querySelector( '#search-input' ),
+        tweetList = document.querySelector( '.tweets' );
 
 	searchInput.addEventListener( 'keyup',  getTweets );	 
+    tweetList.addEventListener( 'click', addFavorite );
+    
+	searchInput = null; //remove reference to searchInput
 
-	searchInput = null;
+    function addFavorite( e ){
+        
+        var target = e.target;
+        
+        if( target.classList.contains( 'favorite' ) ){
+            
+            if( target.classList.contains( 'favorite-selected' ) ){
+                target.classList.remove( 'favorite-selected' );    
+            }
+            else{
+                target.classList.add( 'favorite-selected' );    
+            }
+        }
+    }
 
     function getTweets( e ){
         var request,
             term;
 
-        term = e.target.value;
+        term = e.currentTarget.value; //where the event was dispatched on
 
         if( term.length > 1 ){
             
