@@ -15,12 +15,7 @@
         
         if( target.classList.contains( 'favorite' ) ){
             
-            if( target.classList.contains( 'favorite-selected' ) ){
-                target.classList.remove( 'favorite-selected' );    
-            }
-            else{
-                target.classList.add( 'favorite-selected' );    
-            }
+            target.classList.toggle( 'favorite-selected' );
         }
     }
 

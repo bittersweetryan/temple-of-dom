@@ -202,7 +202,30 @@ Using these tools we can create the `addTweet` and `createTweet` methods:
 
 We're almose out of the Temple safely, however, we'd like to come back and remember the things that we really liked along the way.  To do this we'll "favorite" the artifacts we really liked.  In order to do this we'll use a technique called "event delegation".  Since we are adding and removing artifacts dynamically we'd have to add event listeners on each item we add to the page, we'd also have to remember to clean up after ourselves when items are removed to the page. Additionally if we had a large list of items to listen to we'd end up creating a lot of event listeners which could slow our page down.  The solution to this problem is to use event delegation. Event delegation is where the event handler for an item is added to one of the element's parents and use event bubbling to respond to the event.
 
->Event bubbling is where events trigered on children get triggered on parent elements all the way up the dom tree until the event is finally triggered on the global object.  For example if we have a DOM tree that looks like this `html > body > div > ul > li` and a user clicks on the li the click will fire on the li, ul, div, body, and html elements and each one of these elements can handle the event. < < bubbling pic > > 
+>Event bubbling is where events trigered on children get triggered on parent elements all the way up the dom tree until the event is finally triggered on the global object.  For example if we have a DOM tree that looks like this `html > body > div > ul > li` and a user clicks on the li the click will fire on the li, ul, div, body, and html elements and each one of these elements can handle the event. < < bubbling pic > > Look at the following example to watch event bubbling in action: [http://jsbin.com/uxufos/3/edit](http://jsbin.com/uxufos/3/edit)
  
-The DOMTokenList can be iterated like an array, but it also has some useful utility methods.  The `add` method can be used to add a class to an element, avoiding the need to manually to mainpulate the className's string.  The `remove`
+In order to implement event delegation into the page an event listener will be added to the tweet container using the same `addEventListener` method as before: 
+
+    tweetList.addEventListener( 'click', addFavorite );
+    
+The `addFavorite` method will check to determine if the element that was clicked was a favorite link or not using the `event.target` property and respond accordingly.  To do this we will use the target's `classList` property.  The `classList` property is unique in that it returns a DOMTokenListwhich can be iterated like an array, but it also has some useful utility methods.  The `add( class [, additionalClasses] )` method adds a class to an element's classList, it accepts one or more class name parameters.  The `remove( class [,additionalClasses])` method will remove a class from an elemnts's classList, the `toggle( class )` method will add a class if it does not exist on the element and remove it if it does.  Lastly the `contains( class )` method will return a boolean value if the element has the class or not. 
+
+> `classList` isn't supported in versions of Internet Explorer less than 10.  In order to modify the classes on our elements in IE 9 and older we'd have to manually manipulate the className string.
+
+In our journey the `toggle` and `contains` methods will allow us to accomplish our final goal.  In our event listener well use the `contains` method to check if the element has a class of "favorite".  If it does we know that the favorite star was clicked and we can then use the `toggle` method to add and remove the favorite-selected class.
+
+    function addFavorite( e ){
+        
+        var target = e.target;
+        
+        if( target.classList.contains( 'favorite' ) ){
+            
+            target.classList.toggle( 'favorite-selected' );
+        }
+    }
+
+###Back to Safety
+We made it out of the Temple of DOM alive, and only midly scathed by those wretched Internet Explorer quirks.  Hopefully through this journey you've learned that the API in modern browsers for maniulating the DOM is really quite powerful and that the heavy frameworks aren't needed for every project.  
+
+
 
