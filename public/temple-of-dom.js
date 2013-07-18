@@ -20,8 +20,10 @@
         	request.addEventListener( 'load', function( e ){
         	    addTweets( JSON.parse( this.response ) );
         	});
+            
+            console.log( window.location.protocol + '//' + window.location.host + '/search/' );
 
-            request.open( 'GET', 'http://' + window.location.host + '/search/' + term, true );
+            request.open( 'GET', window.location.protocol + '//' + window.location.host + '/search/' + term, true );
             request.send();
         }
     }

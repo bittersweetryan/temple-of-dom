@@ -112,7 +112,7 @@ In order to remove all of the tweets from the page we'll get a reference to the 
     }  
 
 ###Third Challenge
-Our third challenge is the longest on we'll face because creating elements using the native DOM methods can be quite verbose. There is a shortcut we could take, by setting the `innerHTML` of our `<ol>`, however it can be an expensive operation becuase it has to fire up the browser's HTML parser.  We'll avoid this trap on our journey and use the more performant methods.  
+Our third challenge is going to be the longest because creating elements using  DOM methods can be quite verbose. There is a shortcut we could take, by setting the `innerHTML` of our `<ol>`, however it can be an expensive operation becuase it has to fire up the browser's HTML parser.  We'll avoid this trap on our journey and use the more performant methods.  
 
 First we'll the  `document.createDocumentFragment()` method which returns a lightweight container that can be used to attach elements to before inserting them on the page. The fragment container cannot be added to the page without any child elements.  We'll use the  `document.createElement( tagName )` to create new elements that can be appended to our fragment.  The `document.createElement` method accepts the tag name of an HTML element as it's only parameter and returns a new HTMLElement of that type.  Our new elements will require a bit of styling information, and in the temple of DOM there are a few different ways of mainpulating class information on an element.  The first, and most consice is to set the element's `className` property. We can also use the powerful element.classList property wich returns a `DOMTokenList` element, we'll talk more about `classList` in the next challenge.  Since we are creating new elements we know the element has no classes already assigned so using the className property is the most concise way to set the class. 
 
@@ -120,7 +120,7 @@ To add new elements to the page the DOM provides us with the `appendChild( child
 
 The last method we'll use to add tweets to the page is the `setAttribute( name, value )` method.  The name parameter is the name of the attribute to be set and the value is the value that it should be set to.  
 
-Using these new tools we can create the `addTweet` and `createTweet` methods:
+Using these tools we can create the `addTweet` and `createTweet` methods:
 
     function addTweet( tweet ){
         
@@ -128,7 +128,6 @@ Using these new tools we can create the `addTweet` and `createTweet` methods:
 
         tweets.insertBefore( createTweet( tweet ), tweets.firstChild );
     }
-
 
     function createTweet( tweet ){
         var frag = document.createDocumentFragment(),
