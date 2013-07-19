@@ -227,5 +227,7 @@ In our journey the `toggle` and `contains` methods will allow us to accomplish o
 ###Back to Safety
 We made it out of the Temple of DOM alive, and only midly scathed by those wretched Internet Explorer quirks.  Hopefully through this journey you've learned that the API in modern browsers for maniulating the DOM is really quite powerful and that the heavy frameworks aren't needed for every project.  
 
+Our entire journey can be viewed on Github at: http://
+
 
 
