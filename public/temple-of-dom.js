@@ -52,7 +52,7 @@
     }
 
     function clearTweets(){
-        var ele = document.querySelectorAll( '.tweet' );
+        var ele = document.querySelector( '.tweets' );
 
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
