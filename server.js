@@ -1,9 +1,12 @@
 var express = require( 'express' ),
 	fs = require( 'fs' ),
-	app = express();
+	app = express(),
+	http = require( 'http' );
 
 app.use( express.logger() );
 app.use( express.static( 'public' ) );
+
+app.set('port', process.env.PORT || 3000);
 
 app.get( '/search/:term', function( req, res){
 	
@@ -24,5 +27,8 @@ app.get( '/search/:term', function( req, res){
 	}
 });
 
-app.listen( process.env.PORT );
+http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
+});
+//app.listen( process.env.PORT );
 //app.listen( 3000 );
