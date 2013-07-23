@@ -15,6 +15,9 @@ Project Time: 1-3 hours
 URL: http://blog.bittersweetryan.com
 Areas of expertise: JavaScript, CSS
 
+##Link
+
+[http://]
 
 ##Main Text
 
