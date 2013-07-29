@@ -30,7 +30,7 @@
             request = new XMLHttpRequest();
 
         	request.addEventListener( 'load', function( e ){
-        	    addartifacts( JSON.parse( this.response ) );
+        	    addArtifacts( JSON.parse( this.response ) );
         	});
             
             console.log( window.location.protocol + '//' + window.location.host + '/search/' );
@@ -40,34 +40,34 @@
         }
     }
 
-    function addartifacts( data ){
-        clearartifacts();
+    function addArtifacts( data ){
+        clearArtifacts();
 
         if( typeof data === 'object' && data.length ){
 
             data.forEach(
-                addartifact
+                addArtifact
             );
         }
     }
 
-    function clearartifacts(){
+    function clearArtifacts(){
         var ele = document.querySelectorAll( '.artifact' );
-
+        
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
         }
     }
 
-    function addartifact( artifact ){
+    function addArtifact( artifact ){
         
         var artifacts = document.querySelector( '.artifacts' );
 
-        artifacts.insertBefore( createartifact( artifact ), artifacts.firstChild );
+        artifacts.insertBefore( createArtifact( artifact ), artifacts.firstChild );
     }
 
 
-    function createartifact( artifact ){
+    function createArtifact( artifact ){
         var frag = document.createDocumentFragment(),
             li = document.createElement( 'li' ),
             avatar = document.createElement( 'div' ),
