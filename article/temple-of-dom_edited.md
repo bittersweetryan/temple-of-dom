@@ -11,9 +11,14 @@ Knowledge Needed: A basic understanding of JavaScript
 Requires: Modern Web Browser (including IE 10 and newer)
 Project Time: 1-3 hours
 
-##Author InformationName: Ryan Anklam
-URL: http://blog.bittersweetryan.com
-Areas of expertise: JavaScript, CSS
+##Author Information
+Name: Ryan Anklam
+
+
+URL: http://blog.bittersweetryan.com
+
+
+Areas of expertise: JavaScript, CSS
 
 ##Link
 
@@ -21,9 +26,9 @@ Project Time: 1-3 hours
 
 ##Main Text
 
-Ditching the dollar sign can be a scary thought, just like entering the Temple of DOOM.  In the same way Indiana Jones doesn't rely on bombs and machine guns, every web project doesn't need to start with adding third-party libraries. Modern browsers have a powerful API called the Document Object Model, or DOM for short, that developers can leverage to manipulate HTML documents. 
+Ditching the dollar sign can be a scary thought, just like entering the Temple of DOOM.  In the same way Indiana Jones doesn't rely on heavy artillery, every web project doesn't need to start with adding third-party libraries. Modern browsers have a powerful API called the Document Object Model, or DOM for short, that developers can leverage to manipulate HTML documents. 
 
-In this article, we'll venture into the Temple of DOM to build an application to search for artifacts (tweets) by Dr. Jones and his crew. Instead of whips and knives, we'll be arming ourselves with methods and properties. Much like Indiana Jones had to deal with Mola Ram in the Temple of DOOM, our villain in the Temple of DOM will be Internet Explorer.  
+In this article, we'll venture into the Temple of DOM to build an application that searches for artifacts (browser hacks) . Instead of whips and knives, we'll be arming ourselves with methods and properties. Much like Indiana Jones had to deal with Mola Ram in the Temple of DOOM, our villain in the Temple of DOM will be Internet Explorer.  
 
 Let's start with a quick lesson on traversing an HTML landscape so we know how to move around the DOM tree.
 
@@ -57,28 +62,28 @@ The `firstChild` property of a node always points to the node's first child. We 
 
 ###The Treasure Hunt
 
-Now that we're prepared to navigate our landscape, let's take a look at where the Temple of DOM will take us.  Our goal will be to search a fake twitter stream for artifacts (tweets) that match a search string and display only the artifacts that contain part or all of our search.  We will also be able to mark artifacts as "favorites" so we can look at them later. Our map for the trip will be quite simple, yet will provide us with the opportunity to use many of the DOM's tools to accomplish our goal:
+Now that we're prepared to navigate our landscape, let's take a look at where the Temple of DOM will take us.  Our goal will be to search a for artifacts (browser hacks) that match a search string and display only the artifacts that contain part or all of our search.  We will also be able to mark artifacts as "favorites" so we can look at them later. Our map for the trip will be quite simple, yet will provide us with the opportunity to use many of the DOM's tools to accomplish our goal:
 
     <div class="content">
         <section class="search">
             <input type="text" class="search-text" id="search-input">
         </section>
-        <section class="tweet-container">
-            <ul class="tweets">
-                   <!-- this part will be dynamically added to the DOM -->
-                <li class="tweet">
+        <section class="artifact-container">
+            <ul class="artifacts">
+                <!-- this part will be dynamically added to the DOM -->
+                <li class="artifact">
                     <div class="avatar">
                         <img src="" alt="" class="avatar">
                     </div>
                     
-                    <div class="tweet-user">
+                    <div class="artifact-browser">
                     </div>
-                    <div class="tweet-content">
-                        <div class="tweet-info">
+                    <div class="artifact-content">
+                        <div class="artifact-info">
                         </div>
                     </div>
                 </li>
-                   <!-- end dynamic content -->
+                <!-- end dynamic content -->
             </ul>
         </section>
     </div>
@@ -86,7 +91,7 @@ Now that we're prepared to navigate our landscape, let's take a look at where th
 
 ###First Challenge
 
-As we enter the Temple of DOM, the first challenge we'll face is selecting our input and listening for `keyup` events that will trigger our application to get a list of matching tweets from the server. 
+As we enter the Temple of DOM, the first challenge we'll face is selecting our input and listening for `keyup` events that will trigger our application to get a list of matching artifacts from the server. 
 
 > We use the `keyup` event because the `keydown` and `keypress` events fire continually while the user has a key pressed, however, the keyup event will only fire once per key press.
 
@@ -98,9 +103,9 @@ Our map has only a single input, so the `document.querySelector` method is the b
 
 	var searchInput = document.querySelector( '#search-input' );
 
-Next we need to be able to listen for the `keyup` event to be triggered on the select.  The DOM gives us an easy to use API for subscribing and unsubscribing to events with the `addEventListener( type, listener [,useCapture] )` and `removeEventListener( type, listener [,useCapture] )` methods.  The code below will listen for `keyup` events on the `searchInput` and call the getTweets method.  
+Next we need to be able to listen for the `keyup` event to be triggered on the select.  The DOM gives us an easy to use API for subscribing and unsubscribing to events with the `addEventListener( type, listener [,useCapture] )` and `removeEventListener( type, listener [,useCapture] )` methods.  The code below will listen for `keyup` events on the `searchInput` and call the `getArtifacts` method.  
 
-    searchInput.addEventListener( 'keyup',  getTweets );
+    searchInput.addEventListener( 'keyup',  getArtifacts );
 
 >Versions of Internet Explorer earlier than 9 do not use a standard event model. Instead of using the standard `addEventListener` and `removeEventListener` methods, IE uses `attachEvent` and `detatchEvent`.  The fun doesn't stop there, however, because the event object that gets passed into the callback also deviates from the standards set by the W3C. This means that if you have to support IE 8 and older you cannot rely on the `event.target` and `event.currentTarget` properties existing in the object that gets passed into your callback function.  
 
@@ -109,9 +114,9 @@ As we travel deeper into the DOM, we'll need to know how to use the `event` obje
 
 > The event object has two similar properties that point to DOM objects: `target` and `currentTarget`.  The `target` property refers to the element that the event was dispatched on and the `currentTarget` property refers to the element that the eventListener was attached to.  We'll cover these in more detail in our third challenge. 
 
-`getTweets` will use the `event.target` property to get a reference to the element the user is typing in and will use the elements `value` property to retrieve the text.  Since we won't get much meaningful information out of a single character, the next step is to make sure the user has entered at least two characters before sending data off to the server via AJAX request.  The completed `getTweets` function is shown below:  
+`getArtifacts` will use the `event.target` property to get a reference to the element the user is typing in and will use the elements `value` property to retrieve the text.  Since we won't get much meaningful information out of a single character, the next step is to make sure the user has entered at least two characters before sending data off to the server via AJAX request.  The completed `getArtifacts` function is shown below:  
 
-    function getTweets( e ){
+    function getArtifacts( e ){
         var request,
             term;
 
@@ -122,7 +127,7 @@ As we travel deeper into the DOM, we'll need to know how to use the `event` obje
             request = new XMLHttpRequest();
 
             request.addEventListener( 'load', function( e ){
-                addTweets( JSON.parse( this.response ) );
+                addArtifacts( JSON.parse( this.response ) );
             });
 
             request.open( 'GET', 'http://localhost:3000/search/' + term, true );
@@ -130,11 +135,11 @@ As we travel deeper into the DOM, we'll need to know how to use the `event` obje
         }
     }
     
-The `addTweets( data )` function that will be invoked when the ajax request is complete will accept a JSON object as a parameter and clear all the current tweets from the page before adding new ones. 
-In order to remove all of the artifacts from the page, we'll need to create a  `clearTweets` method.  Using a `while` loop, we'll loop through all of the ordered lists' children until it has no more, removing each child along the way using the `removeChild( child )` method as shown below:
+The `addArtifacts( data )` function that will be invoked when the ajax request is complete will accept a JSON object as a parameter and clear all the current artifacts from the page before adding new ones. 
+In order to remove all of the artifacts from the page, we'll need to create a  `clearArtifacts` method.  Using a `while` loop, we'll loop through all of the ordered lists' children until it has no more, removing each child along the way using the `removeChild( child )` method as shown below:
 
-    function clearTweets(){
-        var ele = document.querySelector( '.tweets' );
+    function clearArtifacts(){
+        var ele = document.querySelector( '.artifacts' );
 
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
@@ -150,26 +155,26 @@ To insert elements, DOM provides us with the `appendChild( child )`, `insertBefo
 
 The last method we'll use when adding artifacts to the page is the `setAttribute( name, value )` method.  This method is used to set attributes on elements, here we will use it to set the `src` property of an `image` tag.
 
-Using these tools we can create the `addTweet` and `createTweet` functions (some redundant code has been removed):
+Using these tools we can create the `addArtifact` and `createArtifact` functions (some redundant code has been removed):
 
-    function addTweet( tweet ){
+    function addArtifact( artifact ){
 		...
-        tweets.insertBefore( createTweet( tweet ), tweets.firstChild );
+        artifacts.insertBefore( creatArtifact( artifact ), artifacts.firstChild );
     }
 
-    function createTweet( tweet ){
+    function creatArtifact( artifact ){
         var fragment = document.createDocumentFragment(),
             li = document.createElement( 'li' ),
             avatarImage = document.createElement( 'img' ),
-            tweetContent = document.createElement( 'div'),
-            tweetText = document.createTextNode( tweet.tweet );
+            artifactContent = document.createElement( 'div'),
+            artifactText = document.createTextNode( artifact.hack ),
             
-            tweetContent.appendChild( tweetText )
+            artifactContent.appendChild( artifactText )
 
-            li.className = 'tweet';
-            avatarImage.setAttribute( 'src', 'images/' + tweet.avatar );
+            li.className = 'artifact';
+            avatarImage.setAttribute( 'src', 'images/' + artifact.avatar );
 
-            tweetContent.className =  'tweet-content';
+            artifactContent.className =  'artifact-content';
 			
 			//build each li by using appendChild
             fragment.appendChild( li );
@@ -188,9 +193,9 @@ Without event delegation, we'd have to add an event listener on each star on the
  
 In order to implement event delegation into our page, an event listener will be added to the parent element of the artifact list using the same `addEventListener` method as before: 
 
-    var tweetList =  document.querySelector( '.tweets' );
+    var artifactList =  document.querySelector( '.artifacts' );
     
-    tweetList.addEventListener( 'click', addFavorite );
+    artifactList.addEventListener( 'click', addFavorite );
     
 The `addFavorite` method will check to determine if the element that was clicked was a favorite element or not using the `event.target` property and respond accordingly. If the event was triggered by an artifact, we'll modify its class information to signify whether it was favorited or un-favorited. To do this we will use the target's `classList` property.  The `classList` property returns a unique value called a `DOMTokenList`.  `DomTokenList`'s can be iterated like an array, but they also have some useful utility methods.  The `add( class [, additionalClasses] )` method adds a class or multiple classes to an element's classList. It accepts one or more class names as parameters and will append them to the elements `className` attribute.  The `remove( class [,additionalClasses])` method will remove one or more classes from an elements's classList. The `toggle( class )` method will add a class if it does not exist on the element and remove it if the class already exists on the element.  Lastly, the `contains( class )` method will return a boolean value if the element has the class or not. 
 
