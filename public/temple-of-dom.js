@@ -4,7 +4,7 @@
     var searchInput = document.querySelector( '#search-input' ),
         artifactList = document.querySelector( '.artifacts' );
 
-	searchInput.addEventListener( 'keyup',  getartifacts );	 
+	searchInput.addEventListener( 'keyup',  getArtifacts );	 
     artifactList.addEventListener( 'click', addFavorite );
     
 	searchInput = null; //remove reference to searchInput
@@ -19,7 +19,7 @@
         }
     }
 
-    function getartifacts( e ){
+    function getArtifacts( e ){
         var request,
             term;
 
@@ -52,7 +52,7 @@
     }
 
     function clearArtifacts(){
-        var ele = document.querySelectorAll( '.artifact' );
+        var ele = document.querySelector( '.artifacts' );
         
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
@@ -75,7 +75,7 @@
             artifactUser = document.createElement( 'div' ),
             userText = document.createTextNode( artifact.browser ),
             artifactContent = document.createElement( 'div'),
-            artifactText = document.createTextNode( artifact.artifact ),
+            artifactText = document.createTextNode( artifact.hack ),
             artifactInfo = document.createElement( 'div'  ),
             artifactInfoText = document.createTextNode( artifact.category );
 
