@@ -38,16 +38,16 @@ header{
     max-width: 900px;
 }
 
-ul.tweets{
+ul.artifacts{
     list-style:none;   
 }
 
-li.tweet{
+li.artifact{
     padding-left: 0;
     margin-bottom: 20px;
 }
 
-.tweets{
+.artifacts{
     background-color: #fff;
     padding: 20px;
     border-radius: 4px;
@@ -66,7 +66,7 @@ img.avatar{
     height: 86px;
 }
 
-.tweet{
+.artifact{
     background-color: #c7c7c7;
     padding: 8px 10px 8px 5px;
     position: relative;
@@ -76,11 +76,11 @@ img.avatar{
     line-height: 1.4em;
 }
 
-.tweet-user{
+.artifact-user{
     margin-bottom: 5px;
 }
 
-.tweet-content{
+.artifact-content{
 }
 
 .search{
@@ -97,7 +97,7 @@ img.avatar{
     color: #4b4b4b;
 }
 
-.tweet-info{
+.artifact-info{
     margin-top: 5px;
     font-style:italic;
 }

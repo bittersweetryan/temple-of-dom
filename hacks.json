@@ -1,0 +1,124 @@
+{
+    "artifacts": [
+        {
+            "browser" : "chrome",
+            "hack": "::made-up-pseudo-element, .selector {}",
+            "category": "selector",
+            "avatar": "chrome.jpg"
+        },
+        {
+            "browser" : "chrome",
+            "hack": "@media screen and (-webkit-min-device-pixel-ratio:0) {}",
+            "category": "media-query",
+            "avatar": "chrome.jpg"
+        },
+        {
+            "browser" : "chrome",
+            "hack": "var isChrome = !!window.chrome && !!window.chrome.webstore;",
+            "category": "javascript",
+            "avatar": "chrome.jpg"
+        },
+        {
+            "browser" : "firefox ",
+            "hack": "body:not(:-moz-handler-blocked) .selector {}",
+            "category": "selector",
+            "avatar": "firefox.jpg"
+        },
+        {
+            "browser" : "firefox",
+            "hack": "@media screen and (-moz-images-in-menus:0) {}",
+            "category": "media-query",
+            "avatar": "firefox.jpg"
+        },
+        {
+            "browser" : "firefox",
+            "hack": "@media screen and (min--moz-device-pixel-ratio:0) {}",
+            "category": "media-query",
+            "avatar": "firefox.jpg"
+        },
+        {
+            "browser" : "Firefox",
+            "hack": "var isFF = !!navigator.userAgent.match(/firefox/i);",
+            "category": "javascript",
+            "avatar": "firefox.jpg"
+        },
+        {
+            "browser" : "IE7-",
+            "hack": ".selector { property: value !ie; }",
+            "category": "property-value,
+            "avatar": "ie7.jpg"
+        },
+        {
+            "browser" : "IE6",
+            "hack": ".selector { property/**/: value; }",
+            "category": "property-value",
+            "avatar": "ie6.jpg"
+        },
+        {
+            "browser" : "IE10",
+            "hack": "@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {}",
+            "category": "media-query",
+            "avatar": "ie10.jpg"
+        },
+        {
+            "browser" : "IE8-",
+            "hack": "@media \\0screen\\,screen\\9 {}",
+            "category": "media-query",
+            "avatar": "ie8.jpg"
+        },
+        {
+            "browser" : "IE",
+            "hack": "var ieVersion = (function() { if (new RegExp(\"MSIE ([0-9]{1,}[\\.0-9]{0,})\").exec(navigator.userAgent) != null) { return parseFloat( RegExp.$1 ); } else { return false; } })();",
+            "category": "javascript",
+            "avatar": "ie10.jpg"
+        },
+        {
+            "browser" : "IE",
+            "hack": "var ieVersion = /*@cc_on (function() {switch(@_jscript_version) {case 1.0: return 3; case 3.0: return 4; case 5.0: return 5; case 5.1: return 5; case 5.5: return 5.5; case 5.6: return 6; case 5.7: return 7; case 5.8: return 8; case 9: return 9; case 10: return 10;}})() || @*/ 0;",
+            "category": "javascript",
+            "avatar": "ie10.jpg"
+        },
+        {
+            "browser" : "IE",
+            "hack": "<!--[if IE gte X]> Internet Explorer X or greater <![endif]-->",
+            "category": "conditional",
+            "avatar": "ie8.jpg"
+        },
+        {
+            "browser" : "Opera",
+            "hack": "@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0) {}",
+            "category": "selector",
+            "avatar": "opera.jpg"
+        },
+        {
+            "browser" : "Opera",
+            "hack": "@media (min-resolution: .001dpcm) { _:-o-prefocus, .selector {} }",
+            "category": "media-query",
+            "avatar": "opera.jpg"
+        },
+        {
+            "browser" : "Opera",
+            "hack": "var isOpera = !!window.opera;",
+            "category": "javascript",
+            "avatar": "opera.jpg"
+        },
+        {
+            "browser" : "Safari",
+            "hack": "html:first-child .selector {}",
+            "category": "selector",
+            "avatar": "safari.jpg"
+        },
+        {
+            "browser" : "Safari ",
+            "hack": "@media screen and (-webkit-min-device-pixel-ratio:0) {}",
+            "category": "media-query",
+            "avatar": "safari.jpg"
+        },
+        {
+            "browser" : "Safari",
+            "hack": "var isSafari = /Constructor/.test(window.HTMLElement);",
+            "category": "javaScript",
+            "avatar": "safari.jpg"
+        }
+    ]
+}

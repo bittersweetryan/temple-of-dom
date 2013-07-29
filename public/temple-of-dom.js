@@ -2,10 +2,10 @@
     'use strict';
     
     var searchInput = document.querySelector( '#search-input' ),
-        tweetList = document.querySelector( '.tweets' );
+        artifactList = document.querySelector( '.artifacts' );
 
-	searchInput.addEventListener( 'keyup',  getTweets );	 
-    tweetList.addEventListener( 'click', addFavorite );
+	searchInput.addEventListener( 'keyup',  getartifacts );	 
+    artifactList.addEventListener( 'click', addFavorite );
     
 	searchInput = null; //remove reference to searchInput
 
@@ -19,7 +19,7 @@
         }
     }
 
-    function getTweets( e ){
+    function getartifacts( e ){
         var request,
             term;
 
@@ -30,7 +30,7 @@
             request = new XMLHttpRequest();
 
         	request.addEventListener( 'load', function( e ){
-        	    addTweets( JSON.parse( this.response ) );
+        	    addartifacts( JSON.parse( this.response ) );
         	});
             
             console.log( window.location.protocol + '//' + window.location.host + '/search/' );
@@ -40,55 +40,55 @@
         }
     }
 
-    function addTweets( data ){
-        clearTweets();
+    function addartifacts( data ){
+        clearartifacts();
 
         if( typeof data === 'object' && data.length ){
 
             data.forEach(
-                addTweet
+                addartifact
             );
         }
     }
 
-    function clearTweets(){
-        var ele = document.querySelectorAll( '.tweet' );
+    function clearartifacts(){
+        var ele = document.querySelectorAll( '.artifact' );
 
         while( ele.firstChild ){
             ele.removeChild( ele.firstChild );
         }
     }
 
-    function addTweet( tweet ){
+    function addartifact( artifact ){
         
-        var tweets = document.querySelector( '.tweets' );
+        var artifacts = document.querySelector( '.artifacts' );
 
-        tweets.insertBefore( createTweet( tweet ), tweets.firstChild );
+        artifacts.insertBefore( createartifact( artifact ), artifacts.firstChild );
     }
 
 
-    function createTweet( tweet ){
+    function createartifact( artifact ){
         var frag = document.createDocumentFragment(),
             li = document.createElement( 'li' ),
             avatar = document.createElement( 'div' ),
             avatarImage = document.createElement( 'img' ),
-            tweetUser = document.createElement( 'div' ),
-            userText = document.createTextNode( tweet.username ),
-            tweetContent = document.createElement( 'div'),
-            tweetText = document.createTextNode( tweet.tweet ),
-            tweetInfo = document.createElement( 'div'  ),
-            tweetInfoText = document.createTextNode( tweet.date );
+            artifactUser = document.createElement( 'div' ),
+            userText = document.createTextNode( artifact.browser ),
+            artifactContent = document.createElement( 'div'),
+            artifactText = document.createTextNode( artifact.artifact ),
+            artifactInfo = document.createElement( 'div'  ),
+            artifactInfoText = document.createTextNode( artifact.category );
 
-            li.className = 'tweet';
+            li.className = 'artifact';
             avatar.className =  'avatar';
-            avatarImage.setAttribute( 'src', 'images/' + tweet.avatar );
-            avatarImage.setAttribute( 'alt', tweet.avatar );
+            avatarImage.setAttribute( 'src', 'images/' + artifact.avatar );
+            avatarImage.setAttribute( 'alt', artifact.avatar );
 
             avatarImage.classList.add( 'avatar' );
 
-            tweetUser.className =  'tweet-user';
-            tweetContent.className =  'tweet-content';
-            tweetInfo.className = 'tweet-info'; 
+            artifactUser.className =  'artifact-browser';
+            artifactContent.className =  'artifact-content';
+            artifactInfo.className = 'artifact-info'; 
 
             frag.appendChild( li );
 
@@ -96,17 +96,17 @@
 
             avatar.appendChild( avatarImage );
 
-            li.appendChild( tweetUser );
+            li.appendChild( artifactUser );
 
-            tweetUser.appendChild( userText );
+            artifactUser.appendChild( userText );
 
-            li.appendChild( tweetContent );
+            li.appendChild( artifactContent );
 
-            tweetContent.appendChild( tweetText );
+            artifactContent.appendChild( artifactText );
 
-            tweetContent.appendChild( tweetInfo );
+            artifactContent.appendChild( artifactInfo );
 
-            tweetInfo.appendChild( tweetInfoText );
+            artifactInfo.appendChild( artifactInfoText );
 
             return frag;
     }
